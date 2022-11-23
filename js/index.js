@@ -7,6 +7,9 @@ var ballSpeedY = 4;
 
 var player1Score = 0;
 var player2Score = 0;
+const WINNING_SCORE =3;
+
+var showingWinScreen = false;
 
 var paddle1Y = 250;
 var paddle2Y = 250;
@@ -54,6 +57,10 @@ function computerMovement() {
 
 function moveEverything() {
 
+    if(showingWinScreen) {
+        return;
+    }
+
     computerMovement();
 
     ballX += ballSpeedX;
@@ -64,9 +71,12 @@ function moveEverything() {
         if(ballY > paddle1Y &&
             ballY < paddly1Y+PADDLE_HEIGHT) {
                 ballSpeedX =- ballSpeedX;
+
+                var deltaY = ballY-(paddle1Y+PADDLE_HEIGHT/2)
+                ballSpeedY = deltaY * 0.35;
             } else {
+                player2Score++;  // must be BEFORE ballReset()
                 ballReset();
-                player2Score++;
             }
     }
     if(ballX > canvas.width) {
@@ -77,9 +87,12 @@ function moveEverything() {
         if(ballY > paddle2Y &&
             ballY < paddly2Y+PADDLE_HEIGHT) {
                 ballSpeedX =- ballSpeedX;
+
+                var deltaY = ballY-(paddle2Y+PADDLE_HEIGHT/2)
+                ballSpeedY = deltaY * 0.35;
             } else {
+                player1Score++;  // must be BEFORE ballReset()
                 ballReset();
-                player1Score++;
             }
     }
     if(ballY > canvas.height) {
@@ -88,6 +101,12 @@ function moveEverything() {
 }
 
 function ballReset() {
+    if(Player1Score >= WINNING_SCORE || player2Score >= WINNING_SCORE) {
+        player1Score = 0;
+        player2Score = 0;
+        showingWinScreen = true;
+    }
+
     ballSpeedX = -ballSpeedX;
     ballX = canvas.width/2;
     ballY = canvas.height/2;
@@ -97,6 +116,11 @@ function drawEverything() {
     // next line blanks out the screen with black
     colorRect(0.0,canvas.width, canvas.height, 'black');
 
+    if(showingWinScreen) {
+        canvasContext.fillstyle = 'white';
+        canvasContext.fillText("Click to continue", 100, 100);
+        return;
+    }
     // this is the left player paddle
     colorRect(0,paddle1Y,PADDLE_THICKNESS,PADDLE_HEIGHT, 'white');
 
