@@ -79,7 +79,7 @@ function moveEverything() {
     if(ballX < 0) {
 
         if(ballY > paddle1Y &&
-            ballY < paddly1Y+PADDLE_HEIGHT) {
+            ballY < paddle1Y+PADDLE_HEIGHT) {
                 ballSpeedX =- ballSpeedX;
 
                 var deltaY = ballY-(paddle1Y+PADDLE_HEIGHT/2)
@@ -95,7 +95,7 @@ function moveEverything() {
     if(ballY < 0) {
 
         if(ballY > paddle2Y &&
-            ballY < paddly2Y+PADDLE_HEIGHT) {
+            ballY < paddle2Y+PADDLE_HEIGHT) {
                 ballSpeedX =- ballSpeedX;
 
                 var deltaY = ballY-(paddle2Y+PADDLE_HEIGHT/2)
@@ -111,7 +111,7 @@ function moveEverything() {
 }
 
 function ballReset() {
-    if(Player1Score >= WINNING_SCORE || player2Score >= WINNING_SCORE) {
+    if(player1Score >= WINNING_SCORE || player2Score >= WINNING_SCORE) {
         showingWinScreen = true;
     }
 
